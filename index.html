@@ -38,7 +38,8 @@
    </style> -->
    <style type="text/css">
 
-   @media print {
+   @media print 
+   {
 
   a[href]:after {
     content: none !important;
@@ -49,12 +50,37 @@
     display:none;
   }
 
+  .showWhenPrint
+  {
+  	display:block !important;
+  }
+
   .giveBorderWhenPrint
   {
     border-bottom: 5px solid #FF420E !important;
   }
   
 
+}
+
+.custom_icon
+{
+	margin-top: -0.3em;
+	margin-left: 0.1em;
+    height: 1.5em;
+}
+.basicInfo
+{
+	padding-top: 2em;
+	padding-right: 2em;
+}
+.BIC
+{
+	padding-right: 1em;
+}
+.showWhenPrint
+{
+	display: none;
 }
        
    </style>
@@ -71,17 +97,48 @@
     <!-- ******HEADER****** --> 
     <header class="header">
         <div class="container">                       
-            <img class="profile-image img-responsive pull-left" src="assets/images/profile.png" alt="James Lee" />
+            <img class="profile-image img-responsive pull-left" src="assets/images/profile.png" alt="Abhishek Vasudev" />
             <div class="profile-content pull-left">
                 <h1 class="name">Abhishek Vasudev</h1>
                 <h2 class="desc">Undergraduate | Software Developer</h2>   
                 <ul class="social list-inline hideWhenPrint">
                     <li><a href="https://www.linkedin.com/in/abhishek-vasudev" target="_blank"><i class="fa fa-linkedin"></i></a></li>                   
                     <li><a href="https://github.com/abhishekvasudev/" target="_blank"><i class="fa fa-github"></i></a></li>                  
-                    <li class="last-item"><a href="https://www.facebook.com/abhishek.vasudev.7"><i class="fa fa-facebook"></i></a></li>                 
+                    <li class="last-item"><a href="https://www.facebook.com/abhishek.vasudev.7" target="_blank"><i class="fa fa-facebook"></i></a></li>  
+                    <li class="last-item"><a href="https://www.codechef.com/users/abhishekv" target="_blank">
+                    <i class="fa">	<img class="custom_icon" src="assets/images/cfi.png"/></i></a></li>                 
                 </ul> 
             </div><!--//profile-->
-            <a class="btn btn-cta-primary pull-right hideWhenPrint" href="mailto:abhishekvasudev7@gmail.com" target="_blank"><i class="fa fa-paper-plane"></i> Contact Me</a>  
+
+
+            <div class="profile-content pull-right basicInfo">
+                <!-- <h2 class="heading sr-only">Basic Information</h2> -->
+                        <div class="content">
+                            <ul class="list-unstyled">
+                                <li><i class="BIC fa fa-map-marker" style="margin-right:1.3em; padding-right: 0em;"></i><span class="sr-only">Location:</span>New Delhi, India</li>
+                                <li><i class=" BIC fa fa-envelope-o" style="margin-right:0.9em; padding-right: 0em;"></i><span class="sr-only">Email:</span><a href="mailto:abhishekvasudev7@gmail.com">abhishekvasudev7@gmail.com</a></li>
+                                <li><i class=" BIC fa fa-phone"></i><span class="sr-only">Phone:</span><a href="tel:+919582044450">9582044450</a></li>
+                                <li><i class=" BIC fa fa-link"></i><span class="sr-only">Website:</span><a href="http://abhishekvasudev.github.io" target="_blank">http://abhishekvasudev.github.io</a></li>
+                                <li class="showWhenPrint" >
+                                	<i class="BIC fa fa-linkedin"></i>
+                                	https://www.linkedin.com/in/abhishek-vasudev
+                                </li>
+                                <li class="showWhenPrint" >
+                                	<i class="BIC fa fa-github"></i>
+                                	https://github.com/abhishekvasudev/
+                                </li>
+                                <li class="showWhenPrint" >
+                                	<i class="BIC fa fa-facebook" style="margin-right:1.3em; padding-right: 0em;"></i>
+                                	https://www.facebook.com/abhishek.vasudev.7
+                                </li>
+                                <li class="showWhenPrint" >
+                                	<i class="BIC fa" style="margin-right:0.65em; padding-right: 0em;">	<img class="custom_icon" src="assets/images/cfi.png"/></i>
+                                	https://www.codechef.com/users/abhishekv
+                                </li>
+                            </ul>
+                        </div><!--//content-->  
+            </div><!--//profile-->
+            <!-- <a class="btn btn-cta-primary pull-right hideWhenPrint" href="mailto:abhishekvasudev7@gmail.com" target="_blank"><i class="fa fa-paper-plane"></i> Contact Me</a>   -->
 
         </div><!--//container-->
     </header><!--//header-->
@@ -282,6 +339,9 @@ Company NameComezo -->
                                 </p>
                             </div><!--//item-->
 
+                            <div class="blank space" style="height:2.15em;"> 
+                            	</div>
+
 
 
                             
@@ -307,13 +367,13 @@ Company NameComezo -->
             <div class="secondary col-md-4 col-sm-12 col-xs-12">
                  <aside class="info aside section">
                     <div class="section-inner">
-                        <h2 class="heading sr-only">Basic Information</h2>
+                        <h2 class="heading ">Achievements</h2>
                         <div class="content">
                             <ul class="list-unstyled">
-                                <li><i class="fa fa-map-marker"></i><span class="sr-only">Location:</span>New Delhi, India</li>
-                                <li><i class="fa fa-envelope-o"></i><span class="sr-only">Email:</span><a href="mailto:abhishekvasudev7@gmail.com">abhishekvasudev7@gmail.com</a></li>
-                                <li><i class="fa fa-phone"></i><span class="sr-only">Phone:</span><a href="tel:+919582044450">9582044450</a></li>
-                                <li><i class="fa fa-link"></i><span class="sr-only">Website:</span><a href="http://abhishekvasudev.github.io" target="_blank">http://abhishekvasudev.github.io</a></li>
+                                <li>Shortlisted for screening process for the role of Software Developer at Google</li>
+                                <li>Scured Gold and Silver Medal at National Cyber Olympiad in 2012 and 2013 respectively.</li>
+                                <li></li>
+                                <li></li>
                             </ul>
                         </div><!--//content-->  
                     </div><!--//section-inner-->                 
@@ -426,7 +486,7 @@ Company NameComezo -->
                     <h4 class="degree">B.Tech | Information Technology </h4>
                     <h5 class="meta">GGSIPU</h5>
                     <div class="time">2014 - 2018</div>
-                    <div class="time">Aggregate: 82.52%</div>
+                    <div class="time">Aggregate: 82.75%</div>
                 </div><!--//item-->
                 <div class="item">
                     <h4 class="degree">Senior Secondary(XII)</h4>
@@ -487,7 +547,7 @@ Company NameComezo -->
     <footer class="footer giveBorderWhenPrint" >
         <div class="container text-center"  >
                 <!-- <small class="copyright">Designed using Bootstrap</small> -->
-                <a class=" hideWhenPrint" href="Abhishek_Vasudev _ Portfolio.pdf" target="_blank"> Download Portfolio </a>
+                <a class=" hideWhenPrint" href="Abhishek_Vasudev_Portfolio.pdf" target="_blank"> Download Portfolio </a>
         </div><!--//container-->
     </footer><!--//footer-->
  
