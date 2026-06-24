@@ -1,0 +1,54 @@
+{
+  "articles": [
+    {
+      "id": "wwdc-2025-recap",
+      "hidden": false,
+      "title": "WWDC 2025 — A Bold New Era for Apple",
+      "category": "tech",
+      "author": "Abhishek Vasudev",
+      "date": "2025-06-10",
+      "excerpt": "Keynote highlights, developer takeaways, and what WWDC 2025 means for iOS teams — from Liquid Glass to on-device Apple Intelligence.",
+      "tags": ["wwdc", "apple", "ios", "swift", "ai", "conference"]
+    },
+    {
+      "id": "iosdevuk-conference-2024",
+      "hidden": false,
+      "title": "iOSDevUK Conference — Talks, Trains, and Takeaways",
+      "category": "tech",
+      "author": "Abhishek Vasudev",
+      "date": "2024-09-15",
+      "excerpt": "A recap of iOSDevUK in Aberystwyth, Wales — from Xcode Cloud and Swift macros to my lightning talk on NTTI performance metrics.",
+      "tags": ["iosdevuk", "conference", "swift", "xcode-cloud", "testing"]
+    },
+    {
+      "id": "swift-anytime-delhi-meetup-2022",
+      "hidden": false,
+      "title": "Swift Anytime Delhi Meetup — My First Talk",
+      "category": "tech",
+      "author": "Abhishek Vasudev",
+      "date": "2022-09-24",
+      "excerpt": "Recap of my first in-person iOS meetup in Gurgaon — attending as a speaker, giving a lightning talk on my career journey, and connecting with Delhi's iOS community.",
+      "tags": ["meetup", "swift", "speaking", "career", "delhi"]
+    },
+    {
+      "id": "welcome-to-my-blog",
+      "hidden": true,
+      "title": "Welcome to My Blog",
+      "category": "tech",
+      "author": "Abhishek Vasudev",
+      "date": "2026-06-01",
+      "excerpt": "My first blog post about starting this journey. Set hidden to false in articles/index.json to publish.",
+      "tags": ["welcome", "personal"]
+    },
+    {
+      "id": "building-great-products",
+      "hidden": true,
+      "title": "Building Great Products",
+      "category": "lifestyle",
+      "author": "Abhishek Vasudev",
+      "date": "2026-06-03",
+      "excerpt": "Lessons learned from years of software development. Set hidden to false in articles/index.json to publish.",
+      "tags": ["productivity", "career", "lessons"]
+    }
+  ]
+}
