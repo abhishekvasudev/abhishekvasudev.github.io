@@ -67,7 +67,7 @@ export const profile = {
 export const about = {
   intro: [
     "I am an enthusiast whose passion is coding and software development. I am an organized, collaborative, results-driven iOS application developer developing robust code for high volume business solutions. I have keen interest of writing user-friendly, readable, clean, maintainable source code, and the desire to learn more from challenging projects.",
-    "I am on a journey to learn and grow as a complete software developer and iOS development is one of the stepping stones. I also exercise team building and leadership skills which helps me stay connected to my past knowledge, cherish the current project with my team and aim higher for the future.",
+    "I am on a journey to learn and grow as a full stack software developer and iOS development is one of the stepping stones. I also exercise team building and leadership skills which helps me stay connected to my past knowledge, cherish the current project with my team and aim higher for the future.",
   ],
   mobilePractices: [
     "Implementing SOLID principles in native iOS Development using Swift and SwiftUI",
