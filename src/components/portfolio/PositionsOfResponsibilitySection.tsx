@@ -7,7 +7,7 @@ export default function PositionsOfResponsibilitySection() {
       <ul className="space-y-4">
         {positionsOfResponsibility.map((item) => (
           <li key={item.title}>
-            <h5 className="font-semibold text-white text-sm">{item.title}</h5>
+            <h3 className="font-semibold text-white text-sm">{item.title}</h3>
             <p className="text-sm text-zinc-400 mt-1 font-light">{item.description}</p>
           </li>
         ))}

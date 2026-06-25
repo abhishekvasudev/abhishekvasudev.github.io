@@ -42,7 +42,7 @@ export default function Sidebar() {
         <div className="space-y-5">
           {education.map((item) => (
             <div key={item.degree}>
-              <h4 className="font-semibold text-white text-sm">{item.degree}</h4>
+              <h3 className="font-semibold text-white text-sm">{item.degree}</h3>
               <p className="text-sm text-zinc-400">{item.institution}</p>
               <p className="text-xs text-zinc-500 font-mono">{item.period}</p>
               <p className="text-xs text-zinc-500 font-mono">{item.aggregate}</p>
