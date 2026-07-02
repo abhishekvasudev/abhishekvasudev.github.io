@@ -1,15 +1,28 @@
-export interface Article {
+export interface ArticleIndex {
   id: string;
   title: string;
   category: string;
   author: string;
   date: string;
+  updated?: string;
   excerpt: string;
+  description?: string;
   tags: string[];
   cover?: string;
-  body: string;
   images: string[];
   slug: string;
+  readingTime?: number;
+}
+
+export interface ArticleDetail {
+  slug: string;
+  body: string;
+  bodyHtml: string;
+}
+
+export interface Article extends ArticleIndex {
+  body?: string;
+  bodyHtml?: string;
 }
 
 export interface FeaturedProject {
@@ -38,7 +51,7 @@ export interface ContentStats {
 
 export interface SiteContent {
   generated_at: string;
-  articles: Article[];
+  articles: ArticleIndex[];
   featured_projects: FeaturedProject[];
   facets: ContentFacets;
   stats: ContentStats;

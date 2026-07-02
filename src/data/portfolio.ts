@@ -55,7 +55,7 @@ export const profile = {
   location: "London, United Kingdom",
   email: "abhishekvasudev7@gmail.com",
   linkedin: "https://www.linkedin.com/in/abhishek-vasudev",
-  website: "http://www.abhishekvasu.dev",
+  website: "https://www.abhishekvasu.dev",
   image: "/images/profile2.jpg",
   social: [
     { name: "LinkedIn", url: "https://www.linkedin.com/in/abhishek-vasudev", icon: "linkedin" as const },

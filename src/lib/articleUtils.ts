@@ -16,9 +16,10 @@ export function stripLeadingH1(markdown: string): string {
 }
 
 /** Resolve the cover image for an article. */
-export function getArticleCover(article: { cover?: string; body: string }): string | null {
+export function getArticleCover(article: { cover?: string; body?: string }): string | null {
   if (article.cover) return article.cover;
-  return getArticleCoverImage(article.body);
+  if (article.body) return getArticleCoverImage(article.body);
+  return null;
 }
 
 /** Build markdown for rendering, optionally injecting a cover image at the top. */

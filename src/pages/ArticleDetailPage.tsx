@@ -1,11 +1,17 @@
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, Clock } from "lucide-react";
 import MarkdownContent from "../components/MarkdownContent";
 import ReturnToTop from "../components/home/ReturnToTop";
 import SEO from "../components/SEO";
-import { getArticleCover, getReadingTimeMinutes } from "../lib/articleUtils";
-import { SITE_URL, absoluteUrl } from "../lib/seo";
-import type { SiteContent } from "../content.types";
+import { getArticleCover } from "../lib/articleUtils";
+import {
+  loadArticleDetail,
+  loadArticleDetailSync,
+  readBootstrapArticle,
+} from "../lib/loadArticle";
+import { articleJsonLd, absoluteUrl } from "../lib/seo";
+import type { ArticleIndex, SiteContent } from "../content.types";
 
 interface ArticleDetailPageProps {
   content: SiteContent;
@@ -19,9 +25,46 @@ function formatDate(date: string) {
   });
 }
 
+function ArticleSkeleton() {
+  return (
+    <div className="pt-32 pb-20 px-4 md:px-8 max-w-3xl mx-auto animate-pulse">
+      <div className="h-4 w-32 bg-zinc-800 rounded mb-12" />
+      <div className="h-10 w-3/4 bg-zinc-800 rounded mb-6" />
+      <div className="h-4 w-48 bg-zinc-900 rounded mb-10" />
+      <div className="space-y-4">
+        <div className="h-4 bg-zinc-900 rounded" />
+        <div className="h-4 bg-zinc-900 rounded" />
+        <div className="h-4 w-5/6 bg-zinc-900 rounded" />
+      </div>
+    </div>
+  );
+}
+
 export default function ArticleDetailPage({ content }: ArticleDetailPageProps) {
   const { slug } = useParams<{ slug: string }>();
   const article = content.articles.find((a) => a.slug === slug);
+
+  const [detail, setDetail] = useState(() => {
+    if (!slug) return null;
+    if (import.meta.env.SSR) return loadArticleDetailSync(slug);
+    return readBootstrapArticle(slug);
+  });
+
+  const [loading, setLoading] = useState(() => !detail && Boolean(slug));
+
+  useEffect(() => {
+    if (!slug || detail) return;
+    let active = true;
+    setLoading(true);
+    loadArticleDetail(slug).then((data) => {
+      if (!active) return;
+      setDetail(data);
+      setLoading(false);
+    });
+    return () => {
+      active = false;
+    };
+  }, [slug, detail]);
 
   if (!article) {
     return (
@@ -46,32 +89,45 @@ export default function ArticleDetailPage({ content }: ArticleDetailPageProps) {
     );
   }
 
+  if (loading || !detail) {
+    return (
+      <>
+        <SEO
+          title={`${article.title} | Abhishek Vasudev`}
+          description={article.description || article.excerpt}
+          url={`/blog/${article.slug}`}
+          type="article"
+        />
+        <ArticleSkeleton />
+      </>
+    );
+  }
+
+  return <ArticleView article={article} detail={detail} />;
+}
+
+function ArticleView({ article, detail }: { article: ArticleIndex; detail: { bodyHtml: string } }) {
   const coverImage = getArticleCover(article);
-  const readingTime = getReadingTimeMinutes(article.body);
+  const readingTime = article.readingTime ?? 5;
   const articleUrl = `/blog/${article.slug}`;
   const ogImage = coverImage ? absoluteUrl(coverImage) : undefined;
+  const metaDescription = article.description || article.excerpt;
 
-  const articleSchema = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    headline: article.title,
-    description: article.excerpt,
-    datePublished: article.date,
-    author: {
-      "@type": "Person",
-      name: article.author,
-      url: SITE_URL,
-    },
-    image: ogImage,
-    url: absoluteUrl(articleUrl),
-    keywords: article.tags?.join(", "),
-  };
+  const articleSchema = articleJsonLd({
+    title: article.title,
+    description: metaDescription,
+    date: article.date,
+    updated: article.updated,
+    author: article.author,
+    slug: article.slug,
+    image: coverImage ?? undefined,
+  });
 
   return (
     <>
       <SEO
         title={`${article.title} | Abhishek Vasudev`}
-        description={article.excerpt}
+        description={metaDescription}
         image={ogImage}
         url={articleUrl}
         type="article"
@@ -119,11 +175,7 @@ export default function ArticleDetailPage({ content }: ArticleDetailPageProps) {
           </header>
 
           <div className="mb-16">
-            <MarkdownContent
-              content={article.body}
-              stripTitle
-              prependCover={coverImage}
-            />
+            <MarkdownContent html={detail.bodyHtml} content="" />
           </div>
 
           {article.tags && article.tags.length > 0 && (

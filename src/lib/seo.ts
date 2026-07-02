@@ -1,31 +1,42 @@
-export const SITE_URL = "https://www.abhishekvasu.dev";
+import {
+  AUTHOR_EMAIL,
+  AUTHOR_EMPLOYER,
+  AUTHOR_JOB_TITLE,
+  AUTHOR_NAME,
+  DEFAULT_DESCRIPTION,
+  DEFAULT_OG_IMAGE,
+  DEFAULT_TITLE,
+  PERSON_SAME_AS,
+  SITE_NAME,
+  SITE_URL,
+  absoluteUrl,
+} from "../config/site";
 
-export const DEFAULT_TITLE = "Abhishek Vasudev | Senior iOS & SwiftUI Developer";
-
-export const DEFAULT_DESCRIPTION =
-  "Abhishek Vasudev is a Senior iOS Engineer and SwiftUI Developer based in London. Expert in Swift, iOS development, and building scalable mobile applications at Expedia Group.";
-
-export const DEFAULT_OG_IMAGE = `${SITE_URL}/images/profile2.jpg`;
-
-export const SITE_NAME = "Abhishek Vasudev";
-
-export const PERSON_SAME_AS = [
-  "https://www.linkedin.com/in/abhishek-vasudev",
-  "https://github.com/abhishekvasudev/",
-  "https://www.codechef.com/users/abhishekv",
-] as const;
+export {
+  SITE_URL,
+  SITE_NAME,
+  DEFAULT_TITLE,
+  DEFAULT_DESCRIPTION,
+  DEFAULT_OG_IMAGE,
+  PERSON_SAME_AS,
+  absoluteUrl,
+};
 
 export const PERSON_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "Person",
-  name: "Abhishek Vasudev",
-  jobTitle: "Senior iOS Engineer",
+  name: AUTHOR_NAME,
+  jobTitle: AUTHOR_JOB_TITLE,
   url: SITE_URL,
   image: DEFAULT_OG_IMAGE,
-  email: "abhishekvasudev7@gmail.com",
+  email: AUTHOR_EMAIL,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "London",
+  },
   worksFor: {
     "@type": "Organization",
-    name: "Expedia Group",
+    name: AUTHOR_EMPLOYER,
   },
   sameAs: [...PERSON_SAME_AS],
   knowsAbout: [
@@ -47,7 +58,82 @@ export const PERSON_SCHEMA = {
   ],
 } as const;
 
-export function absoluteUrl(path: string): string {
-  if (path.startsWith("http://") || path.startsWith("https://")) return path;
-  return `${SITE_URL}${path.startsWith("/") ? path : `/${path}`}`;
+export const WEBSITE_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: SITE_NAME,
+  url: SITE_URL,
+  author: { "@type": "Person", name: AUTHOR_NAME, url: SITE_URL },
+} as const;
+
+export function homeJsonLd() {
+  return [PERSON_SCHEMA, WEBSITE_SCHEMA];
+}
+
+export function profilePageJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    mainEntity: PERSON_SCHEMA,
+    url: absoluteUrl("/portfolio"),
+  };
+}
+
+export function articleJsonLd(article: {
+  title: string;
+  description: string;
+  date: string;
+  updated?: string;
+  author: string;
+  slug: string;
+  image?: string;
+}) {
+  const articleUrl = absoluteUrl(`/blog/${article.slug}`);
+  const image = article.image ? absoluteUrl(article.image) : DEFAULT_OG_IMAGE;
+
+  return [
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      headline: article.title,
+      description: article.description,
+      datePublished: article.date,
+      dateModified: article.updated ?? article.date,
+      author: {
+        "@type": "Person",
+        name: article.author,
+        url: SITE_URL,
+      },
+      image,
+      url: articleUrl,
+      mainEntityOfPage: {
+        "@type": "WebPage",
+        "@id": articleUrl,
+      },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: SITE_URL,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Blog",
+          item: absoluteUrl("/blog"),
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: article.title,
+          item: articleUrl,
+        },
+      ],
+    },
+  ];
 }

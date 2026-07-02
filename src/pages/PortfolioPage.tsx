@@ -4,6 +4,7 @@ import PositionsOfResponsibilitySection from "../components/portfolio/PositionsO
 import ProjectsSection from "../components/portfolio/ProjectsSection";
 import Sidebar from "../components/portfolio/Sidebar";
 import SEO from "../components/SEO";
+import { profilePageJsonLd } from "../lib/seo";
 
 export default function PortfolioPage() {
   return (
@@ -13,6 +14,7 @@ export default function PortfolioPage() {
         description="Professional portfolio of Abhishek Vasudev — Senior iOS Engineer specializing in Swift, SwiftUI, and scalable mobile architecture. Work experience at Expedia Group, Mutual Mobile, and Infosys."
         url="/portfolio"
         type="profile"
+        jsonLd={profilePageJsonLd()}
       />
       <ProfileHeader />
       <div className="max-w-6xl mx-auto px-4 md:px-8 pb-20">

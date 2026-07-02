@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight, Clock } from "lucide-react";
 import type { Article } from "../content.types";
-import { getArticleCover, getReadingTimeMinutes } from "../lib/articleUtils";
+import { getArticleCover } from "../lib/articleUtils";
+import { prefetchArticleDetail } from "../lib/loadArticle";
 
 interface ArticleCardProps {
   article: Article;
@@ -16,11 +17,14 @@ const categoryGradients: Record<string, string> = {
 export default function ArticleCard({ article }: ArticleCardProps) {
   const coverImage = getArticleCover(article);
   const gradient = categoryGradients[article.category] ?? categoryGradients.default;
-  const readingTime = getReadingTimeMinutes(article.body);
+  const readingTime = article.readingTime ?? 5;
 
   return (
     <Link
       to={`/blog/${article.slug}`}
+      viewTransition
+      onMouseEnter={() => prefetchArticleDetail(article.slug)}
+      onFocus={() => prefetchArticleDetail(article.slug)}
       className="group glass-panel border border-white/5 hover:border-gold-500/35 shadow-lg rounded-2xl overflow-hidden transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-1.5 flex h-full flex-col"
     >
       <div className="relative aspect-[16/10] shrink-0 overflow-hidden border-b border-white/5">

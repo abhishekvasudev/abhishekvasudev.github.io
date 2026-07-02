@@ -1,0 +1,16 @@
+{
+  "SITE_URL": "https://www.abhishekvasu.dev",
+  "SITE_NAME": "Abhishek Vasudev",
+  "AUTHOR_NAME": "Abhishek Vasudev",
+  "AUTHOR_JOB_TITLE": "Senior iOS Engineer",
+  "AUTHOR_EMPLOYER": "Expedia Group",
+  "SOCIAL_LINKS": {
+    "github": "https://github.com/abhishekvasudev/",
+    "linkedin": "https://www.linkedin.com/in/abhishek-vasudev",
+    "x": "https://x.com/abhishekvasude1"
+  },
+  "DEFAULT_TITLE": "Abhishek Vasudev | Senior iOS & SwiftUI Developer",
+  "DEFAULT_DESCRIPTION": "Abhishek Vasudev is a Senior iOS Engineer and SwiftUI Developer based in London. Expert in Swift, iOS development, and building scalable mobile applications at Expedia Group.",
+  "AUTHOR_EMAIL": "abhishekvasudev7@gmail.com",
+  "URL_STYLE": "flat-html"
+}

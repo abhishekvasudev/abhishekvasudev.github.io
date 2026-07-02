@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Abhishek Vasudev — Blog</title>
+    <link>https://www.abhishekvasu.dev/blog</link>
+    <description>Abhishek Vasudev is a Senior iOS Engineer and SwiftUI Developer based in London. Expert in Swift, iOS development, and building scalable mobile applications at Expedia Group.</description>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 02 Jul 2026 20:21:00 GMT</lastBuildDate>
+    <atom:link href="https://www.abhishekvasu.dev/rss.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>WWDC 2025 — A Bold New Era for Apple</title>
+      <link>https://www.abhishekvasu.dev/blog/wwdc-2025-recap</link>
+      <guid isPermaLink="true">https://www.abhishekvasu.dev/blog/wwdc-2025-recap</guid>
+      <pubDate>Tue, 10 Jun 2025 00:00:00 GMT</pubDate>
+      <description>Keynote highlights, developer takeaways, and what WWDC 2025 means for iOS teams — from Liquid Glass to on-device Apple Intelligence.</description>
+      <author>Abhishek Vasudev</author>
+    </item>
+    <item>
+      <title>iOSDevUK Conference — Talks, Trains, and Takeaways</title>
+      <link>https://www.abhishekvasu.dev/blog/iosdevuk-conference-2024</link>
+      <guid isPermaLink="true">https://www.abhishekvasu.dev/blog/iosdevuk-conference-2024</guid>
+      <pubDate>Sun, 15 Sep 2024 00:00:00 GMT</pubDate>
+      <description>A recap of iOSDevUK in Aberystwyth, Wales — from Xcode Cloud and Swift macros to my lightning talk on NTTI performance metrics.</description>
+      <author>Abhishek Vasudev</author>
+    </item>
+    <item>
+      <title>Swift Anytime Delhi Meetup — My First Talk</title>
+      <link>https://www.abhishekvasu.dev/blog/swift-anytime-delhi-meetup-2022</link>
+      <guid isPermaLink="true">https://www.abhishekvasu.dev/blog/swift-anytime-delhi-meetup-2022</guid>
+      <pubDate>Sat, 24 Sep 2022 00:00:00 GMT</pubDate>
+      <description>Recap of my first in-person iOS meetup in Gurgaon — attending as a speaker, giving a lightning talk on my career journey, and connecting with Delhi&apos;s iOS community.</description>
+      <author>Abhishek Vasudev</author>
+    </item>
+  </channel>
+</rss>

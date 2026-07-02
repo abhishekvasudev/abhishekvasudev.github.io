@@ -8,6 +8,7 @@ dist/
 
 # Generated content (rebuild with npm run build:content)
 src/content.generated.json
+src/content.index.json
 
 # Article assets copied from articles/ during build:content
 public/articles/
