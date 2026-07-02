@@ -5,13 +5,16 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { compileArticleBody } from "./lib/compile-markdown.mjs";
+import sharp from "sharp";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(__dirname, "..");
 const ARTICLES_DIR = path.join(REPO_ROOT, "articles");
 const FEATURED_PROJECTS_DIR = path.join(REPO_ROOT, "featured-projects");
 const PUBLIC_ARTICLES_DIR = path.join(REPO_ROOT, "public", "articles");
-const OUTPUT_PATH = path.resolve(__dirname, "..", "src", "content.generated.json");
+const OUTPUT_INDEX_PATH = path.resolve(__dirname, "..", "src", "content.index.json");
+const LEGACY_OUTPUT_PATH = path.resolve(__dirname, "..", "src", "content.generated.json");
 
 const IMAGE_EXT = /\.(jpg|jpeg|png|gif|webp|svg)$/i;
 const ARTICLE_ASSETS_DIR = "assets";
@@ -111,6 +114,11 @@ async function syncArticleAssets(articleIds) {
 
     for (const file of images) {
       await fs.copyFile(path.join(assetsDir, file), path.join(destDir, file));
+      if (/\.(jpg|jpeg|png)$/i.test(file)) {
+        const srcPath = path.join(destDir, file);
+        const webpPath = srcPath.replace(/\.(jpg|jpeg|png)$/i, ".webp");
+        await sharp(srcPath).webp({ quality: 82 }).toFile(webpPath);
+      }
     }
 
     log(`Synced ${images.length} asset(s) → public/articles/${id}/${ARTICLE_ASSETS_DIR}/`);
@@ -163,17 +171,31 @@ async function loadArticles() {
       entry.id,
     );
 
+    const body = rewriteRelativeImagePaths(parsed.body, entry.id);
+    const description = parsed.fields.description || entry.description || parsed.fields.excerpt || entry.excerpt || "";
+    const updated = parsed.fields.updated || entry.updated || parsed.fields.date || entry.date || "";
+    const tags = parsed.fields.tags || entry.tags || [];
+    const bodyHtml = await compileArticleBody(body, {
+      stripTitle: true,
+      prependCover: cover || null,
+    });
+
     results.push({
       id: entry.id,
       title: parsed.title || entry.title,
       category: parsed.fields.category || entry.category || "tech",
       author: parsed.fields.author || entry.author || "Unknown",
       date: parsed.fields.date || entry.date || new Date().toISOString().split("T")[0],
+      updated,
       excerpt: parsed.fields.excerpt || entry.excerpt || "",
+      description,
       cover,
-      body: rewriteRelativeImagePaths(parsed.body, entry.id),
+      body,
+      bodyHtml,
       images,
+      tags: Array.isArray(tags) ? tags : [],
       slug: entry.id,
+      readingTime: Math.max(1, Math.ceil(body.trim().split(/\s+/).filter(Boolean).length / 200)),
     });
   }
 
@@ -262,12 +284,34 @@ async function main() {
   const featuredProjects = await loadFeaturedProjects();
   log(`Loaded ${articles.length} articles, ${featuredProjects.length} featured projects`);
 
+  for (const article of articles) {
+    const articleJsonDir = path.join(PUBLIC_ARTICLES_DIR, article.id);
+    await fs.mkdir(articleJsonDir, { recursive: true });
+    await fs.writeFile(
+      path.join(articleJsonDir, "article.json"),
+      JSON.stringify(
+        {
+          slug: article.slug,
+          body: article.body,
+          bodyHtml: article.bodyHtml,
+        },
+        null,
+        2,
+      ) + "\n",
+      "utf8",
+    );
+  }
+
+  const articleIndex = articles.map(
+    ({ body, bodyHtml, ...meta }) => meta,
+  );
+
   const categories = [...new Set(articles.map((a) => a.category))].sort();
   const tags = [...new Set(articles.flatMap((a) => a.tags || []))].sort();
 
   const output = {
     generated_at: new Date().toISOString(),
-    articles,
+    articles: articleIndex,
     featured_projects: featuredProjects,
     facets: {
       categories,
@@ -282,9 +326,11 @@ async function main() {
     },
   };
 
-  await fs.mkdir(path.dirname(OUTPUT_PATH), { recursive: true });
-  await fs.writeFile(OUTPUT_PATH, JSON.stringify(output, null, 2) + "\n", "utf8");
-  log(`Wrote ${OUTPUT_PATH}`);
+  await fs.mkdir(path.dirname(OUTPUT_INDEX_PATH), { recursive: true });
+  await fs.writeFile(OUTPUT_INDEX_PATH, JSON.stringify(output, null, 2) + "\n", "utf8");
+  await fs.writeFile(LEGACY_OUTPUT_PATH, JSON.stringify({ ...output, articles }, null, 2) + "\n", "utf8");
+  log(`Wrote ${OUTPUT_INDEX_PATH}`);
+  log(`Wrote per-article JSON under public/articles/*/article.json`);
   log(`Summary: ${output.stats.total_articles} articles, ${output.stats.total_featured_projects} featured projects`);
 }
 

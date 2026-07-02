@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import ArticleCard from "../components/ArticleCard";
 import SectionHeader from "../components/layout/SectionHeader";
 import SEO from "../components/SEO";
-import type { SiteContent } from "../content.types";
+import type { ArticleIndex, SiteContent } from "../content.types";
 
 interface BlogPageProps {
   content: SiteContent;
@@ -10,11 +10,36 @@ interface BlogPageProps {
 
 export default function BlogPage({ content }: BlogPageProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [query, setQuery] = useState("");
+  const [searchResults, setSearchResults] = useState<ArticleIndex[] | null>(null);
+  const fuseRef = useRef<InstanceType<typeof import("fuse.js").default<ArticleIndex>> | null>(null);
 
-  const filteredArticles =
+  const categoryArticles =
     selectedCategory === "all"
       ? content.articles
       : content.articles.filter((a) => a.category === selectedCategory);
+
+  const filteredArticles = searchResults ?? categoryArticles;
+
+  async function handleSearchFocus() {
+    if (!fuseRef.current) {
+      const Fuse = (await import("fuse.js")).default;
+      fuseRef.current = new Fuse(content.articles, {
+        keys: ["title", "excerpt", "description", "tags"],
+        threshold: 0.35,
+      });
+    }
+  }
+
+  function handleSearchChange(value: string) {
+    setQuery(value);
+    if (!value.trim()) {
+      setSearchResults(null);
+      return;
+    }
+    if (!fuseRef.current) return;
+    setSearchResults(fuseRef.current.search(value).map((result: { item: ArticleIndex }) => result.item));
+  }
 
   const filterButtonClass = (isActive: boolean) => {
     const base = "px-4 py-2 rounded-full text-xs uppercase tracking-widest transition-all active:scale-[0.98]";
@@ -36,6 +61,7 @@ export default function BlogPage({ content }: BlogPageProps) {
           <SectionHeader
             eyebrow="code · life · everything in between"
             title="Blog Archive"
+            as="h1"
           />
           <p className="text-zinc-400 mt-6 max-w-2xl font-light leading-relaxed">
             Hot takes, slow reads, zero release notes.
@@ -61,6 +87,18 @@ export default function BlogPage({ content }: BlogPageProps) {
               {cat} ({content.stats.by_category[cat] || 0})
             </button>
           ))}
+        </div>
+
+        <div className="max-w-6xl mx-auto mb-10">
+          <input
+            type="search"
+            value={query}
+            onFocus={handleSearchFocus}
+            onChange={(e) => handleSearchChange(e.target.value)}
+            placeholder="Search articles…"
+            aria-label="Search articles"
+            className="w-full max-w-md px-4 py-2.5 rounded-xl bg-zinc-950/60 border border-white/10 text-sm text-zinc-200 placeholder:text-zinc-500 focus:outline-none focus:border-gold-500/40"
+          />
         </div>
 
         {filteredArticles.length === 0 ? (

@@ -26,18 +26,18 @@ export default function Header() {
       <div className="navbar-capsule rounded-full px-6 md:px-8 py-4 flex items-center justify-between relative overflow-visible">
         <div className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
-        <Link to="/" className="font-serif text-lg md:text-xl font-normal text-zinc-200 tracking-wider hover:text-white transition-colors duration-300" onClick={closeMenu}>
+        <Link to="/" viewTransition className="font-serif text-lg md:text-xl font-normal text-zinc-200 tracking-wider hover:text-white transition-colors duration-300" onClick={closeMenu}>
           {profile.name}
         </Link>
 
         <nav className="hidden md:flex items-center gap-10">
-          <Link to="/portfolio" className={navLinkClass("/portfolio")}>
+          <Link to="/portfolio" viewTransition className={navLinkClass("/portfolio")}>
             Portfolio
             {isActive("/portfolio") && (
               <span className="absolute -bottom-1.5 left-1/3 right-1/3 h-px bg-white rounded-full" />
             )}
           </Link>
-          <Link to="/blog" className={navLinkClass("/blog")}>
+          <Link to="/blog" viewTransition className={navLinkClass("/blog")}>
             Blog
             {isActive("/blog") && (
               <span className="absolute -bottom-1.5 left-1/3 right-1/3 h-px bg-white rounded-full" />

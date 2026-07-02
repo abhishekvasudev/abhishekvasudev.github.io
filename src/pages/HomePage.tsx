@@ -5,7 +5,7 @@ import FeaturedProjectsSection from "../components/home/FeaturedProjectsSection"
 import ReturnToTop from "../components/home/ReturnToTop";
 import SEO from "../components/SEO";
 import { useScrollToSection } from "../hooks/useScrollToSection";
-import { PERSON_SCHEMA } from "../lib/seo";
+import { homeJsonLd } from "../lib/seo";
 import type { SiteContent } from "../content.types";
 
 interface HomePageProps {
@@ -17,7 +17,7 @@ export default function HomePage({ content }: HomePageProps) {
 
   return (
     <>
-      <SEO jsonLd={PERSON_SCHEMA} />
+      <SEO jsonLd={homeJsonLd()} />
       <HeroSection />
       <AboutMeSection />
       <InsightsSection articles={content.articles} />

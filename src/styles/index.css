@@ -481,3 +481,10 @@
 .article-prose tr:last-child td {
   border-bottom: none;
 }
+
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0.22s;
+  }
+}

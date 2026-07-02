@@ -12,6 +12,7 @@ import ArticleFigure from "./ArticleFigure";
 
 interface MarkdownContentProps {
   content: string;
+  html?: string;
   className?: string;
   stripTitle?: boolean;
   prependCover?: string | null;
@@ -43,10 +44,15 @@ function MarkdownChunk({ content, className }: { content: string; className: str
 
 export default function MarkdownContent({
   content,
+  html,
   className = "article-prose",
   stripTitle = false,
   prependCover = null,
 }: MarkdownContentProps) {
+  if (html) {
+    return <div className={className} dangerouslySetInnerHTML={{ __html: html }} />;
+  }
+
   const source = buildArticleMarkdown(content, { stripTitle, prependCover });
   const segments = parseContentSegments(source);
 

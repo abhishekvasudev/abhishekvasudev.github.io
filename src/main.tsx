@@ -1,21 +1,23 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
-import { HelmetProvider } from "react-helmet-async";
-import App from "./App";
+import { hydrateRoot, createRoot } from "react-dom/client";
+import App, { AppProviders } from "./App";
 import "./styles/index.css";
 
 const rootElement = document.getElementById("root")!;
 
-ReactDOM.createRoot(rootElement).render(
+const app = (
   <React.StrictMode>
-    <HelmetProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </HelmetProvider>
-  </React.StrictMode>,
+    <AppProviders>
+      <App />
+    </AppProviders>
+  </React.StrictMode>
 );
+
+if (rootElement.hasChildNodes()) {
+  hydrateRoot(rootElement, app);
+} else {
+  createRoot(rootElement).render(app);
+}
 
 requestAnimationFrame(() => {
   document.dispatchEvent(new Event("app-rendered"));

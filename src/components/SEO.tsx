@@ -6,7 +6,7 @@ import {
   SITE_NAME,
   SITE_URL,
   absoluteUrl,
-} from "../lib/seo";
+} from "../config/site";
 
 export interface SEOProps {
   title?: string;
@@ -40,6 +40,12 @@ export default function SEO({
       <title>{title}</title>
       <meta name="description" content={description} />
       <link rel="canonical" href={canonicalUrl} />
+      <link
+        rel="alternate"
+        type="application/rss+xml"
+        title={`${SITE_NAME} Blog RSS`}
+        href={`${SITE_URL}/rss.xml`}
+      />
 
       {noindex ? (
         <meta name="robots" content="noindex,nofollow" />
@@ -52,6 +58,8 @@ export default function SEO({
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={ogImage} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
       <meta property="og:url" content={canonicalUrl} />
 
       <meta name="twitter:card" content="summary_large_image" />
